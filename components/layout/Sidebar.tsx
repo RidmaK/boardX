@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface MenuItem {
   label: string;
@@ -114,6 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const pathname = usePathname();
   const { settings } = useTheme();
   const [expandedItems, setExpandedItems] = useState<string[]>(['Analytics']);
+  const isMini = settings.sidebarStyle === 'mini';
 
   const toggleExpanded = (label: string) => {
     setExpandedItems(prev =>
@@ -130,6 +132,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const Icon = item.icon;
 
     if (hasChildren) {
+      if (isMini) {
+        return (
+          <Tooltip key={item.label}>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className={cn(
+                  "w-full h-10 justify-center px-0",
+                  isActive && "bg-accent text-accent-foreground",
+                  "group hover:bg-accent hover:text-accent-foreground"
+                )}
+              >
+                <Icon className="h-5 w-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">{item.label}</TooltipContent>
+          </Tooltip>
+        );
+      }
       return (
         <Collapsible key={item.label} open={isExpanded} onOpenChange={() => toggleExpanded(item.label)}>
           <CollapsibleTrigger asChild>
@@ -154,6 +175,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             {item.children?.map(child => renderMenuItem(child, depth + 1))}
           </CollapsibleContent>
         </Collapsible>
+      );
+    }
+
+    if (isMini) {
+      return (
+        <Tooltip key={item.label}>
+          <TooltipTrigger asChild>
+            <Link href={item.href || '#'} onClick={onClose}>
+              <Button
+                variant="ghost"
+                className={cn(
+                  "w-full h-10 justify-center px-0",
+                  isActive && "bg-accent text-accent-foreground",
+                  "group hover:bg-accent hover:text-accent-foreground"
+                )}
+              >
+                <Icon className="h-5 w-5" />
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">{item.label}</TooltipContent>
+        </Tooltip>
       );
     }
 
@@ -196,11 +239,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col h-full">
           <div className="p-6">
-            <h2 className="text-lg font-semibold">Admin Panel</h2>
+            {!isMini && <h2 className="text-lg font-semibold">Admin Panel</h2>}
           </div>
           
           <nav className="flex-1 px-4 pb-4 space-y-1 overflow-y-auto">
-            {menuItems.map(item => renderMenuItem(item))}
+            <TooltipProvider>{menuItems.map(item => renderMenuItem(item))}</TooltipProvider>
           </nav>
         </div>
       </aside>
