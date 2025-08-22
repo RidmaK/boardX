@@ -41,7 +41,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-16">
       <Header
         onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         onSettingsClick={() => setSettingsOpen(true)}

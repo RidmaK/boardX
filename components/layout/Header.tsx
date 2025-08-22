@@ -16,6 +16,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -32,7 +33,14 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, onSettingsClick }) 
   };
 
   return (
-    <header className="bg-background border-b border-border h-16 flex items-center justify-between px-4 lg:px-6">
+    <header
+      className={cn(
+        "fixed top-0 right-0 left-0 z-50 bg-background border-b border-border h-16 flex items-center justify-between px-4 lg:px-6",
+        settings.sidebarStyle === 'default' && "lg:left-64",
+        settings.sidebarStyle === 'compact' && "lg:left-48",
+        settings.sidebarStyle === 'mini' && "lg:left-16",
+      )}
+    >
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
