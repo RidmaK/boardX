@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CalendarProvider } from '@/contexts/CalendarContext';
+import { ChatProvider } from '@/contexts/ChatContext';
+import { UsersProvider } from '@/contexts/UsersContext';
+import { TasksProvider } from '@/contexts/TasksContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +26,13 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <CalendarProvider>
-              {children}
+              <ChatProvider>
+                <UsersProvider>
+                  <TasksProvider>
+                    {children}
+                  </TasksProvider>
+                </UsersProvider>
+              </ChatProvider>
             </CalendarProvider>
           </AuthProvider>
         </ThemeProvider>

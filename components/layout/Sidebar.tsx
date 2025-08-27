@@ -22,6 +22,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  CheckSquare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -82,6 +83,7 @@ const menuItems: MenuItem[] = [
     label: 'Communication',
     icon: Mail,
     children: [
+      { label: 'Chat', href: '/chat', icon: Mail },
       { label: 'Messages', href: '/messages', icon: Mail },
       { label: 'Notifications', href: '/notifications', icon: Mail },
     ],
@@ -90,6 +92,11 @@ const menuItems: MenuItem[] = [
     label: 'Calendar',
     href: '/calendar',
     icon: Calendar,
+  },
+  {
+    label: 'Tasks',
+    href: '/tasks',
+    icon: CheckSquare,
   },
   {
     label: 'Settings',

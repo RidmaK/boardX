@@ -10,7 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 
-export default function DashboardLayout({
+export default function TasksLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -79,4 +79,4 @@ export default function DashboardLayout({
       />
     </div>
   );
-}
+} 
